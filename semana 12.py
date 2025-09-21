@@ -1,58 +1,36 @@
-# Listas de ciudades, días de la semana y número de semanas
-ciudades = ["Quito", "Guayaquil", "Cuenca"]
-dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
-semanas = 2
-
-# Matriz de temperaturas: ciudades -> semanas -> días
-temperaturas = [
-    [  # Quito
-        [18, 20, 22, 19, 21, 20, 18],  # Semana 1
-        [19, 21, 23, 22, 20, 19, 18]   # Semana 2
-    ],
-    [  # Guayaquil
-        [28, 29, 30, 31, 32, 30, 29],  # Semana 1
-        [29, 30, 31, 32, 33, 31, 30]   # Semana 2
-    ],
-    [  # Cuenca
-        [15, 16, 17, 15, 16, 17, 15],  # Semana 1
-        [16, 17, 18, 17, 16, 17, 16]   # Semana 2
-    ]
-]
-
-# --- Parte 1: Mostrar promedio por semana ---
-print("Promedios por semana:\n")
-for i, ciudad in enumerate(ciudades):
-    print(f"Ciudad: {ciudad}")
-    for s in range(semanas):
-        suma = sum(temperaturas[i][s])
-        promedio = suma / len(dias)
-        print(f"  Semana {s+1}: promedio = {promedio:.2f}°C")
-
-# --- Parte 2: Función para calcular promedio total por ciudad ---
-def promedio_total_ciudad(ciudades, temperaturas):
+# Función para calcular el descuento
+def calcular_descuento(monto_total, porcentaje_descuento=10):
     """
-    Calcula la temperatura promedio total de cada ciudad considerando todas sus semanas.
-
-    Parámetros:
-    - ciudades: lista de nombres de ciudades
-    - temperaturas: lista 3D con temperaturas [ciudad][semana][día]
-
-    Retorna:
-    - diccionario con ciudad como clave y temperatura promedio como valor
+    Calcula el monto del descuento a partir del monto total y el porcentaje.
+    
+    :param monto_total: Monto total de la compra
+    :param porcentaje_descuento: Porcentaje de descuento a aplicar (10% por defecto)
+    :return: Monto del descuento
     """
-    promedios = {}
-    for i, ciudad in enumerate(ciudades):
-        total = 0
-        dias_totales = 0
-        for semana in temperaturas[i]:
-            total += sum(semana)
-            dias_totales += len(semana)
-        promedios[ciudad] = round(total / dias_totales, 2)
-    return promedios
+    descuento = monto_total * (porcentaje_descuento / 100)
+    return descuento
 
-# --- Parte 3: Mostrar promedio total de cada ciudad ---
-print("\nPromedios totales por ciudad:")
-promedios = promedio_total_ciudad(ciudades, temperaturas)
-for ciudad, promedio in promedios.items():
-    print(f"{ciudad}: {promedio}°C")
+# Programa principal
+def main():
+    # Primera llamada: solo monto total, se aplica descuento por defecto (10%)
+    monto1 = 150
+    descuento1 = calcular_descuento(monto1)
+    monto_final1 = monto1 - descuento1
+    print(f"Compra 1: Monto total = ${monto1}")
+    print(f"Descuento aplicado = ${descuento1}")
+    print(f"Monto final a pagar = ${monto_final1}\n")
+    
+    # Segunda llamada: monto total y porcentaje de descuento personalizado
+    monto2 = 200
+    porcentaje2 = 20
+    descuento2 = calcular_descuento(monto2, porcentaje2)
+    monto_final2 = monto2 - descuento2
+    print(f"Compra 2: Monto total = ${monto2}")
+    print(f"Descuento aplicado ({porcentaje2}%) = ${descuento2}")
+    print(f"Monto final a pagar = ${monto_final2}")
+
+# Ejecutar programa principal
+if __name__ == "__main__":
+    main()
+
 
